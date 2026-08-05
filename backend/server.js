@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cookieParser());
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin: [
