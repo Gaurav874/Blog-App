@@ -4,18 +4,22 @@ const blogSlice = createSlice({
   name: "blog",
   initialState: {
     loading: false,
-    blogs: [],      // Saare published blogs ke liye
-    yourBlogs: [],  // Sirf logged-in user ke blogs ke liye
+    blog: [],       // 👈 RecentBlog.jsx ke liye (Zero Breaking Change)
+    blogs: [],      // Extra alias state
+    yourBlogs: [],  // 👈 Dedicated state for Dashboard (YourBlog.jsx)
   },
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
     setBlog: (state, action) => {
+      // Dono arrays me update kar diya taaki RecentBlog.jsx ko instantly data mil jaye
+      state.blog = action.payload;
       state.blogs = action.payload;
     },
     setYourBlogs: (state, action) => {
-      state.yourBlogs = action.payload; // 👈 Dedicated action user blogs ke liye
+      // Sirf user dashboard ke blogs ke liye
+      state.yourBlogs = action.payload;
     },
   },
 });
