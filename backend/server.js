@@ -13,7 +13,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "https://blog-app-ecru-xi.vercel.app", // 👈 Tera Vercel Frontend URL
+      "http://localhost:5173"                // 👈 Local testing ke liye
+    ],
     credentials: true,
   })
 );

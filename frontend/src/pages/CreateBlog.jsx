@@ -56,7 +56,7 @@ const CreateBlog = () => {
       }
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/blog/",
+        "https://blog-app-backend-pmxc.onrender.com/api/v1/blog/",
         formData,
         {
           headers: {

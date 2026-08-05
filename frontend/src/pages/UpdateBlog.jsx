@@ -104,7 +104,7 @@ const UpdateBlog = () => {
 
       // 👈 Fixed: Route path alignment (Agar backend router.route("/:blogId").put(...) use kar raha ho toh URL fix kar dena)
       const res = await axios.put(
-        `http://localhost:8000/api/v1/blog/${id}`,
+        `https://blog-app-backend-pmxc.onrender.com/api/v1/blog/${id}`,
         formData,
         {
           headers: {
@@ -131,7 +131,7 @@ const UpdateBlog = () => {
   const togglePublishUnpublish = async () => {
     try {
       const res = await axios.patch(
-        `http://localhost:8000/api/v1/blog/${id}`,
+        `https://blog-app-backend-pmxc.onrender.com/api/v1/blog/${id}`,
         {},
         { withCredentials: true }
       );
@@ -152,7 +152,7 @@ const UpdateBlog = () => {
   const deleteBlog = async () => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/blog/delete/${id}`,
+        `https://blog-app-backend-pmxc.onrender.com/api/v1/blog/delete/${id}`,
         { withCredentials: true }
       );
 
