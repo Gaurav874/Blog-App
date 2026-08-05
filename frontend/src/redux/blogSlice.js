@@ -4,17 +4,21 @@ const blogSlice = createSlice({
   name: "blog",
   initialState: {
     loading: false,
-    blog: [], // Default empty array for blogs
+    blogs: [],      // Saare published blogs ke liye
+    yourBlogs: [],  // Sirf logged-in user ke blogs ke liye
   },
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
     setBlog: (state, action) => {
-      state.blog = action.payload;
+      state.blogs = action.payload;
+    },
+    setYourBlogs: (state, action) => {
+      state.yourBlogs = action.payload; // 👈 Dedicated action user blogs ke liye
     },
   },
 });
 
-export const { setLoading, setBlog } = blogSlice.actions;
+export const { setLoading, setBlog, setYourBlogs } = blogSlice.actions;
 export default blogSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../components/ui/card";
 import {
   Table,
@@ -17,9 +17,9 @@ import {
 } from "../components/ui/dropdown-menu";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setBlog } from "../redux/blogSlice";
+import { setYourBlogs } from "../redux/blogSlice"; // 👈 FIX: setYourBlogs import kiya
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -27,12 +27,15 @@ const YourBlog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Redux store se user ke blogs extract karo
-  const { blog = [] } = useSelector((store) => store.blog || {});
+  const [loading, setLoading] = useState(true); // 👈 FIX: Glitch rokne ke liye loading state
+
+  // Redux store se user ke specific blogs extract karo
+  const { yourBlogs = [] } = useSelector((store) => store.blog || {});
 
   // API Call: User ke blogs fetch karne ke liye
   const getOwnBlog = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(
         "https://blog-app-backend-pmxc.onrender.com/api/v1/blog/get-own-blogs",
         {
@@ -40,10 +43,12 @@ const YourBlog = () => {
         }
       );
       if (res.data.success) {
-        dispatch(setBlog(res.data.blogs));
+        dispatch(setYourBlogs(res.data.blogs)); // 👈 FIX: setYourBlogs dispatch kiya
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,8 +89,17 @@ const YourBlog = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.isArray(blog) && blog.length > 0 ? (
-              blog.map((item, index) => {
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center py-8">
+                  <div className="flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Loading your blogs...</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : Array.isArray(yourBlogs) && yourBlogs.length > 0 ? (
+              yourBlogs.map((item, index) => {
                 // Formatted Date
                 const formattedDate = item.createdAt
                   ? new Date(item.createdAt).toLocaleDateString("en-US", {
