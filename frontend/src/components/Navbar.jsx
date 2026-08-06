@@ -80,11 +80,11 @@ const Navbar = () => {
           <Link to="/">
             <div className="flex gap-2 items-center">
               <img
-                src={Logo}
-                alt=""
-                className="w-7 h-7 md:w-10 md:h-10 dark:invert"
+                src="/Blogify_logo1.png"
+                alt="Blogify Logo"
+                className="w-12 h-12 md:w-16 md:h-16 dark:invert"
               />
-              <h1 className="font-bold text-3xl md:text-4xl">Logo</h1>
+              <h1 className="font-bold text-3xl md:text-4xl">Blogify</h1>
             </div>
           </Link>
 

@@ -11,13 +11,17 @@ const Footer = () => {
         <div className='mb-6 md:mb-0'>
             <Link to='/' className='flex gap-3 items-center'>
               {/* <img src={Logo} alt="" className='w-32'/> */}
-              <img src={Logo} alt="" className='invert w-12 h-12'/>
-              <h1 className=' text-3xl font-bold'>Logo</h1>
+              <img
+                src="/Blogify_logo1.png"
+                alt="Blogify Logo"
+                className="w-12 h-12 md:w-16 md:h-16 dark:invert"
+              />
+              <h1 className=' text-3xl font-bold'>Blogify</h1>
             </Link>
             <p className='mt-2'>Sharing insights, tutorials, and ideas on web development and tech.</p>
-            <p className='mt-2 text-sm'>123 Blog St, Style City, NY 10001</p>
-            <p className='text-sm'>Email: support@blog.com</p>
-            <p className='text-sm'>Phone: (123) 456-7890</p>
+            <p className='mt-2 text-sm'>Nandgram Ghaziabad, Ghaziabad City, 201001</p>
+            <p className='text-sm'>Email: gk15000874@gmail.com</p>
+            <p className='text-sm'>Phone: 70533-93144</p>
         </div>
         {/* customer service link */}
         <div className='mb-6 md:mb-0'>
