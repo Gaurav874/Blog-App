@@ -33,7 +33,6 @@
 
 
 
-
 const express = require("express");
 const app = express();
 const dbConnect = require("./config/database");
@@ -52,24 +51,29 @@ app.set("trust proxy", 1);
 app.use(
   cors({
     origin: [
-      "https://blog-app-ecru-xi.vercel.app", // Tera exact Vercel Frontend URL (bina trailing slash '/')
-      "http://localhost:5173"
+      "https://blog-app-ecru-xi.vercel.app", // Tera Vercel Frontend URL
+      "http://localhost:5173"                // Local Vite development URL
     ],
     credentials: true,
   })
 );
+
+// Health check route (Vercel deployment test ke liye)
+app.get("/", (req, res) => {
+  res.send("Backend Server is Running Successfully!");
+});
 
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/blog", blogRoute);
 
 dbConnect();
 
-// Local run ke liye (Vercel deployment par app.listen blocking ban jata hai)
+// Local run ke liye
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
     console.log(`Server started at: http://localhost:${PORT}`);
   });
 }
 
-// Vercel serverless function execution ke liye export
+// Vercel serverless function export
 module.exports = app;
