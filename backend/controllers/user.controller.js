@@ -63,6 +63,55 @@ exports.register = async (req, res) => {
     }
 };
 
+// exports.login = async (req, res) => {
+//     try {
+//         const { email, password } = req.body;
+
+//         if (!email || !password) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "All fields are required"
+//             });
+//         }
+
+//         let user = await User.findOne({ email });
+//         if (!user) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Incorrect email or password"
+//             });
+//         }
+
+//         const isPasswordValid = await bcrypt.compare(password, user.password);
+//         if (!isPasswordValid) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Invalid Credentials"
+//             });
+//         }
+
+//         const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
+
+//         return res.status(200).cookie("token", token, {
+//             maxAge: 1 * 24 * 60 * 60 * 1000,
+//             httpOnly: true,
+//             sameSite: "none",
+//             secure: true
+//         }).json({
+//             success: true,
+//             message: `Welcome back ${user.firstName}`,
+//             user
+//         });
+
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).json({
+//             success: false,
+//             message: "Failed to login"
+//         });
+//     }
+// };
+
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -90,17 +139,30 @@ exports.login = async (req, res) => {
             });
         }
 
-        const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
+        // 1. Synchronous function hai, isse await hata diya
+        const token = jwt.sign(
+            { userId: user._id }, 
+            process.env.SECRET_KEY, 
+            { expiresIn: "1d" }
+        );
 
-        return res.status(200).cookie("token", token, {
+        // 2. Security Fix: Response me hash password leak na ho
+        user = user.toObject();
+        delete user.password;
+
+        // 3. Clean cookie configuration
+        const options = {
             maxAge: 1 * 24 * 60 * 60 * 1000,
             httpOnly: true,
-            sameSite: "none",
-            secure: true
-        }).json({
+            secure: true,      // Vercel HTTPS ke liye mandatory
+            sameSite: "none",  // Cross-domain aur mobile authentication fix
+        };
+
+        return res.status(200).cookie("token", token, options).json({
             success: true,
             message: `Welcome back ${user.firstName}`,
-            user
+            user,
+            token // Mobile fallback ke liye response body me bhi bhej diya
         });
 
     } catch (error) {
