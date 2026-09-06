@@ -37,7 +37,7 @@ const YourBlog = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        "https://blog-app-backend-pmxc.onrender.com/api/v1/blog/get-own-blogs",
+        "https://blog-app-ley7.vercel.app/api/v1/blog/get-own-blogs",
         {
           withCredentials: true,
         }
@@ -56,7 +56,7 @@ const YourBlog = () => {
   const deleteBlogHandler = async (blogId) => {
     try {
       const res = await axios.delete(
-        `https://blog-app-backend-pmxc.onrender.com/api/v1/blog/delete/${blogId}`,
+        `https://blog-app-ley7.vercel.app/api/v1/blog/delete/${blogId}`,
         { withCredentials: true }
       );
       if (res.data.success) {

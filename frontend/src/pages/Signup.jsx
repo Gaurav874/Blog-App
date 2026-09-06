@@ -38,7 +38,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        `https://blog-app-backend-pmxc.onrender.com/api/v1/user/register`,
+        `https://blog-app-ley7.vercel.app/api/v1/user/register`,
         user,
         {
           headers: {

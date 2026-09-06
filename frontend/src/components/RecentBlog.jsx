@@ -17,7 +17,7 @@ const RecentBlog = () => {
     const getAllPublishedBlogs = async () => {
       try {
         const res = await axios.get(
-          'https://blog-app-backend-pmxc.onrender.com/api/v1/blog/get-published-blogs',
+          'https://blog-app-ley7.vercel.app/api/v1/blog/get-published-blogs',
           { withCredentials: true }
         )
         if (res.data.success) {

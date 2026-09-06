@@ -41,7 +41,7 @@ const Login = () => {
     try {
       dispatch(setLoading(true));
       const res = await axios.post(
-        `https://blog-app-backend-pmxc.onrender.com/api/v1/user/login`,
+        `https://blog-app-ley7.vercel.app/api/v1/user/login`,
         input,
         {
           headers: {
